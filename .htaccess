@@ -1,0 +1,26 @@
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{HTTP_HOST} ^dicerollers.it [NC]
+RewriteRule ^(.*)$ https://www.dicerollers.it/$1 [L,R=301,NC]
+
+RewriteRule ^.html https://www.dicerollers.it/ [L,R=301]
+RewriteRule ^giochi-da-tavolo.html https://dicerollers.it/introduzione-ai-giochi-da-tavolo.html [L,R=301]
+
+##tutte le pagine chiamano index.php
+RewriteRule ^(.*).html$ index.php?url=$1  [L]
+
+##sitemap.xml chiama sitemap.php
+RewriteRule ^sitemap.xml$  sitemap.php [L]
+
+# SP BEGIN php handler
+<IfModule mod_fcgid.c>
+          AddHandler fcgid-script .php .php5 .php7 .phtml
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php82 .php
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php82 .php5
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php82 .php7
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php82 .phtml
+</IfModule>
+# SP END php handler
+

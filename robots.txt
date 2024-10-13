@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://www.dicerollers.it/sitemap.xml
