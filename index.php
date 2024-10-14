@@ -1,5 +1,10 @@
 <?php
-$conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
+
+if(strpos($_SERVER['REQUEST_URI'], 'localhost')===false)
+	$conn = new mysqli("localhost", "root", "", "autoblog");
+else
+	$conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
+
 $sql="SELECT * FROM keywords WHERE url='".$_GET['url']."'";
 $result=$conn->query($sql);
 if(!$result || $result->num_rows==0){
