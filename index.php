@@ -97,7 +97,7 @@ if(!$result || $result->num_rows==0){
 	<section class="hero">
 		<div class="container">
 			<div class="col-md-6 offset-md-1">
-				<h2>Il mondo del <span class="highlighted">gioco da tavolo</span>,<br> alla portata di tutti</h2>
+				<h2><?php echo $page['header']?></h2>
 			</div>
 		</div>
 	</section>
