@@ -3,7 +3,7 @@
 	<?php
 
 		if(strpos($_SERVER['HTTP_HOST'], 'localhost')!==false)
-			$conn = new mysqli("localhost", "root", "", "autoblog");
+			$conn = new mysqli("localhost", "root", "", "dicerollers");
 		else
 			$conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
 		$sql="SELECT * FROM keywords WHERE text_body!='' ORDER BY created DESC";

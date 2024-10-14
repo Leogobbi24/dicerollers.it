@@ -1,7 +1,7 @@
 <?php
 
 if(strpos($_SERVER['HTTP_HOST'], 'localhost')!==false)
-	$conn = new mysqli("localhost", "root", "", "autoblog");
+	$conn = new mysqli("localhost", "root", "", "dicerollers");
 else
 	$conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
 
@@ -18,8 +18,8 @@ if(!$result || $result->num_rows==0){
 	
 	$limit=($page['url']) ? "LIMIT 0,3" : "" ;
 
-	$sql="SELECT * FROM keywords WHERE text_body!='' AND id!=".$page['id']." ORDER BY created DESC ".$limit;
-	$result=$conn->query($sql);
+	$sqlImage="SELECT * FROM keywords WHERE text_body!='' AND image!='' AND id!=".$page['id']." ORDER BY RAND() DESC ".$limit;
+	$resultImage=$conn->query($sqlImage);
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -36,7 +36,7 @@ if(!$result || $result->num_rows==0){
 
     <script src="https://kit.fontawesome.com/99163fb6b3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/custom.css?3">
+    <link rel="stylesheet" href="css/custom.css?4">
     <link rel="stylesheet" href="css/utility.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -113,9 +113,16 @@ if(!$result || $result->num_rows==0){
 				</div>
 				<div class="col-md-10 offset-md-1 v-middle">
 					<b>Articoli correlati:</b>
-					<?php while($relatedPage=$result->fetch_array(MYSQLI_ASSOC)){ ?>
-						<a href="<?php echo $relatedPage['url']?>.html" title="<?php echo $relatedPage['title']?>"><?php echo $relatedPage['title']?></a>
-					<?php } ?>
+					<div class="row related-blog">
+						<?php while($imagePage=$resultImage->fetch_array(MYSQLI_ASSOC)){ ?>
+						<div class="col-md-4">
+								<a href="<?php echo $imagePage['url']?>.html" title="<?php echo $imagePage['title']?>">
+									<img src="img/blog/<?php echo $imagePage['image']?>">
+								</a>
+								<span><a href="<?php echo $imagePage['url']?>.html" title="<?php echo $imagePage['title']?>"><?php echo $imagePage['title']?></a></span>
+						</div>
+						<?php } ?>
+					</div>
 				</div>
 			</div>
 		</div>

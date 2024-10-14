@@ -2,7 +2,7 @@
 if(date('j')%2==0){
 
     if(strpos($_SERVER['HTTP_HOST'], 'localhost')!==false)
-        $conn = new mysqli("localhost", "root", "", "autoblog");
+        $conn = new mysqli("localhost", "root", "", "dicerollers");
     else
         $conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
     $sql="SELECT * FROM keywords WHERE text_body='' ORDER BY created ASC LIMIT 0,1";
@@ -12,7 +12,7 @@ if(date('j')%2==0){
     
         $textLenght=($keyword['text_lenght']==0) ? 600 : $keyword['text_lenght'];
     
-        $prompt="Scrivi in notazione html un articolo di blog di circa ".$textLenght." parole con ottimizzazione SEO per la parola chiave ".$keyword['keyword'].". Non serve che inserisci la parte di <head> e tutti i tag meta e non inserire nemmeno delle note. Dividi il testo in 3 o 4 sezioni e per ciascuna inserisci un titolo <h2>. Per inserire il grassetto, non utilizzare gli asterischi ma il tag <strong>. Utilizza al massimo 1 o 2 elenchi puntati con i tag <ul> ed <li>. Non inserire il grassetto dentro i titoli. Utilizza il grassetto su alcune delle parole pi첫 rilevanti, tipo la parola chiave. Fai in modo che ci sia sempre esattamente un titolo <h1>. Inserisci i paragrafi di testo all'interno di tag <p>. Non inserire sezioni di conclusione.";
+        $prompt="Scrivi in notazione html un articolo di blog di circa ".$textLenght." parole con ottimizzazione SEO per la parola chiave ".$keyword['keyword'].". Non serve che inserisci la parte di <head> e tutti i tag meta e non inserire nemmeno delle note. Dividi il testo in 3 o 4 sezioni e per ciascuna inserisci un titolo <h2>. Per inserire il grassetto, non utilizzare gli asterischi ma il tag <strong>. Utilizza al massimo 1 o 2 elenchi puntati con i tag <ul> ed <li>. Non inserire il grassetto dentro i titoli. Utilizza il grassetto su alcune delle parole più rilevanti, tipo la parola chiave. Fai in modo che ci sia sempre esattamente un titolo <h1>. Inserisci i paragrafi di testo all'interno di tag <p>. Non inserire sezioni di conclusione. Non inserire mai un altro titolo sotto al primo titolo <h1>.";
     
         if($keyword['prompt_details'])
             $prompt.=" Ecco ulteriori dettagli per la creazione di questo articolo: ".$keyword['prompt_details'];
