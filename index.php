@@ -1,6 +1,6 @@
 <?php
 
-if(strpos($_SERVER['REQUEST_URI'], 'localhost')!==false)
+if(strpos($_SERVER['HTTP_HOST'], 'localhost')!==false)
 	$conn = new mysqli("localhost", "root", "", "autoblog");
 else
 	$conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
