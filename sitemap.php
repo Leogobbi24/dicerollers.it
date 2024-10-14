@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<?php 
 
-		if(strpos($_SERVER['REQUEST_URI'], 'localhost')===false)
+		if(strpos($_SERVER['REQUEST_URI'], 'localhost')!==false)
 			$conn = new mysqli("localhost", "root", "", "autoblog");
 		else
 			$conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
