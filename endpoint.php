@@ -1,42 +1,40 @@
 <?php
-if(date('j')%2==0){
 
-    if(strpos($_SERVER['HTTP_HOST'], 'localhost')!==false)
-        $conn = new mysqli("localhost", "root", "", "dicerollers");
-    else
-        $conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
-    $sql="SELECT * FROM keywords WHERE text_body='' ORDER BY created ASC LIMIT 0,1";
-    $result=$conn->query($sql);
+if(strpos($_SERVER['HTTP_HOST'], 'localhost')!==false)
+    $conn = new mysqli("localhost", "root", "", "dicerollers");
+else
+    $conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
+$sql="SELECT * FROM keywords WHERE text_body='' ORDER BY created ASC LIMIT 0,1";
+$result=$conn->query($sql);
+
+while($keyword=$result->fetch_array(MYSQLI_ASSOC)){
+
+    $textLenght=($keyword['text_lenght']==0) ? 600 : $keyword['text_lenght'];
+
+    $prompt="Scrivi in notazione html un articolo di blog di circa ".$textLenght." parole con ottimizzazione SEO per la parola chiave ".$keyword['keyword'].". Non serve che inserisci la parte di <head> e tutti i tag meta e non inserire nemmeno delle note. Dividi il testo in 3 o 4 sezioni e per ciascuna inserisci un titolo <h2>. Per inserire il grassetto, non utilizzare gli asterischi ma il tag <strong>. Utilizza al massimo 1 o 2 elenchi puntati con i tag <ul> ed <li>. Non inserire il grassetto dentro i titoli. Utilizza il grassetto su alcune delle parole più rilevanti, tipo la parola chiave. Fai in modo che ci sia sempre esattamente un titolo <h1>. Inserisci i paragrafi di testo all'interno di tag <p>. Non inserire sezioni di conclusione. Non inserire mai un altro titolo sotto al primo titolo <h1>.";
+
+    if($keyword['prompt_details'])
+        $prompt.=" Ecco ulteriori dettagli per la creazione di questo articolo: ".$keyword['prompt_details'];
+
+    $textBody=aiRequest($prompt);
+    $textBody=addTypo(str_replace("*", "", $textBody));
+    $update="UPDATE keywords SET created=".time().", text_body = '".addslashes($textBody)."' WHERE id=".$keyword['id'];
+    $conn->query($update);
+
+    //echo $prompt."<br><br>";
+    echo $textBody."<br><br>";
+    echo "<a href='".$keyword['url'].".html' target='blank'>localhost/autoblog/".$keyword['url'].".html</a><br><br>";
+
+    $prompt="Scrivi una meta description per questo testo non più lunga di 100 caratteri. Nella tua risposta inserisci solo il contenuto della meta description e niente altro: ".addslashes($textBody);
+    $metaDescription=aiRequest($prompt);
+
+    echo $metaDescription;
     
-    while($keyword=$result->fetch_array(MYSQLI_ASSOC)){
-    
-        $textLenght=($keyword['text_lenght']==0) ? 600 : $keyword['text_lenght'];
-    
-        $prompt="Scrivi in notazione html un articolo di blog di circa ".$textLenght." parole con ottimizzazione SEO per la parola chiave ".$keyword['keyword'].". Non serve che inserisci la parte di <head> e tutti i tag meta e non inserire nemmeno delle note. Dividi il testo in 3 o 4 sezioni e per ciascuna inserisci un titolo <h2>. Per inserire il grassetto, non utilizzare gli asterischi ma il tag <strong>. Utilizza al massimo 1 o 2 elenchi puntati con i tag <ul> ed <li>. Non inserire il grassetto dentro i titoli. Utilizza il grassetto su alcune delle parole più rilevanti, tipo la parola chiave. Fai in modo che ci sia sempre esattamente un titolo <h1>. Inserisci i paragrafi di testo all'interno di tag <p>. Non inserire sezioni di conclusione. Non inserire mai un altro titolo sotto al primo titolo <h1>.";
-    
-        if($keyword['prompt_details'])
-            $prompt.=" Ecco ulteriori dettagli per la creazione di questo articolo: ".$keyword['prompt_details'];
-    
-        $textBody=aiRequest($prompt);
-        $textBody=addTypo(str_replace("*", "", $textBody));
-        $update="UPDATE keywords SET created=".time().", text_body = '".addslashes($textBody)."' WHERE id=".$keyword['id'];
-        $conn->query($update);
-    
-        //echo $prompt."<br><br>";
-        echo $textBody."<br><br>";
-        echo "<a href='".$keyword['url'].".html' target='blank'>localhost/autoblog/".$keyword['url'].".html</a><br><br>";
-    
-        $prompt="Scrivi una meta description per questo testo non più lunga di 100 caratteri. Nella tua risposta inserisci solo il contenuto della meta description e niente altro: ".addslashes($textBody);
-        $metaDescription=aiRequest($prompt);
-    
-        echo $metaDescription;
-        
-        $update="UPDATE keywords SET meta_description = '".addslashes(trim($metaDescription))."' WHERE id=".$keyword['id'];
-        $conn->query($update);
-    
-        $update="UPDATE keywords SET title = '".ucfirst($keyword['keyword'])."', url = '".str_replace(" ","-",$keyword['keyword'])."' WHERE id=".$keyword['id'];
-        $conn->query($update);
-    }
+    $update="UPDATE keywords SET meta_description = '".addslashes(trim($metaDescription))."' WHERE id=".$keyword['id'];
+    $conn->query($update);
+
+    $update="UPDATE keywords SET title = '".ucfirst($keyword['keyword'])."', url = '".str_replace(" ","-",$keyword['keyword'])."' WHERE id=".$keyword['id'];
+    $conn->query($update);
 }
 
 //TODO da rifattorizzare parametrizzando il numero di errori che vengono inseriti in ogni articolo
