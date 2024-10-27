@@ -154,7 +154,7 @@ img{
 .blog-item{
     margin-bottom: 20px;
 }
-.blog-item{
+.blog-item img{
     object-fit: cover;
     height: 220px;
 }
