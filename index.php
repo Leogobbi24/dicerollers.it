@@ -36,7 +36,7 @@ if(!$result || $result->num_rows==0){
 
     <script src="https://kit.fontawesome.com/99163fb6b3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/custom.css?5">
+    <link rel="stylesheet" href="css/custom.css?6">
     <link rel="stylesheet" href="css/utility.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
