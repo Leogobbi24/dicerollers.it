@@ -94,6 +94,9 @@ if(!$result || $result->num_rows==0){
 		</div>
 	</div>
 
+	<?php if(file_exists('blog/'.$page['url'].'.php')){
+		include 'blog/'.$page['url'].'.php';
+	}else{ ?>
 	<section class="hero">
 		<div class="container">
 			<div class="col-md-6 offset-md-1">
@@ -130,6 +133,7 @@ if(!$result || $result->num_rows==0){
 			</div>
 		</div>
 	</section>
+	<?php } ?>
 
 	<div class="footer">
 		<div class="container">

@@ -158,6 +158,11 @@ img{
     object-fit: cover;
     height: 220px;
 }
+.v-middle{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 @media only screen and (max-width: 768px){
 
     .hero {
