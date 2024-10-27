@@ -14,6 +14,7 @@ if(!$result || $result->num_rows==0){
 	exit;
 
 }else{
+	$page=$result->fetch_array(MYSQLI_ASSOC);
 	
 	$limit=($page['url']) ? "LIMIT 0,3" : "" ;
 
