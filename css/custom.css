@@ -151,6 +151,9 @@ img{
 .related-blog a{
     text-decoration: none;
 }
+.blog-item{
+    margin-bottom: 20px;
+}
 @media only screen and (max-width: 768px){
 
     .hero {

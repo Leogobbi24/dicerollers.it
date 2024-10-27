@@ -36,7 +36,7 @@ if(!$result || $result->num_rows==0){
 
     <script src="https://kit.fontawesome.com/99163fb6b3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/custom.css?4">
+    <link rel="stylesheet" href="css/custom.css?5">
     <link rel="stylesheet" href="css/utility.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,7 +118,7 @@ if(!$result || $result->num_rows==0){
 					<b>Articoli correlati:</b>
 					<div class="row related-blog">
 						<?php while($imagePage=$resultImage->fetch_array(MYSQLI_ASSOC)){ ?>
-						<div class="col-md-4">
+						<div class="col-md-4 blog-item">
 								<a href="<?php echo $imagePage['url']?>.html" title="<?php echo $imagePage['title']?>">
 									<img src="img/blog/<?php echo $imagePage['image']?>">
 								</a>
