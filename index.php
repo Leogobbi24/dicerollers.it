@@ -109,7 +109,7 @@ if(!$result || $result->num_rows==0){
 				    <img src="img/blog/<?php echo $page['image']?>" alt="<?php echo ucfirst($page['keyword'])?>">
 				    <?php 
 				  		}if($page['text_body']!='homepage'){
-				  			echo $page['text_body']
+				  			echo $page['text_body'];
 				  		}
 				  	?>
 				</div>
