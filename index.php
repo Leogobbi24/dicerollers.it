@@ -5,7 +5,7 @@ if(strpos($_SERVER['HTTP_HOST'], 'localhost')!==false)
 else
 	$conn = new mysqli("localhost", "ldiceroy_root", "h049iyz8j8tn", "ldiceroy_dicerollers");
 
-$sql="SELECT * FROM keywords WHERE url='".$_GET['url']."'";
+$sql="SELECT * FROM keywords WHERE url='".$_GET['url']."' AND text_body!=''";
 $result=$conn->query($sql);
 if(!$result || $result->num_rows==0){
 
@@ -14,7 +14,6 @@ if(!$result || $result->num_rows==0){
 	exit;
 
 }else{
-	$page=$result->fetch_array(MYSQLI_ASSOC);
 	
 	$limit=($page['url']) ? "LIMIT 0,3" : "" ;
 
@@ -108,8 +107,11 @@ if(!$result || $result->num_rows==0){
 				<div class="col-md-10 offset-md-1 v-middle post-content">
 				    <?php if($page['image']){ ?>
 				    <img src="img/blog/<?php echo $page['image']?>" alt="<?php echo ucfirst($page['keyword'])?>">
-				    <?php } ?>
-					<?php echo $page['text_body']?>
+				    <?php 
+				  		}if($page['text_body']!='homepage'){
+				  			echo $page['text_body']
+				  		}
+				  	?>
 				</div>
 				<div class="col-md-10 offset-md-1 v-middle">
 					<b>Articoli correlati:</b>
